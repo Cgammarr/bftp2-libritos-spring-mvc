@@ -1,4 +1,4 @@
-package org.factoriaf5.bftp2libritosmvc;
+package org.factoriaf5.libritos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
