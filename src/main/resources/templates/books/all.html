@@ -5,7 +5,24 @@
 <header th:replace="fragments/header"></header>
 <section class="container">
   <h1 th:text="${title}"></h1>
-  <p th:text="${books}"></p>
+  <table>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book: ${books}">
+      <th scope="row" th:text="${book.id}"></th>
+      <td th:text="${book.title}"></td>
+      <td th:text="${book.author}"></td>
+      <td th:text="${book.category}"></td>
+    </tr>
+    </tbody>
+  </table>
 </section>
 <footer th:replace="fragments/footer"></footer>
 </body>

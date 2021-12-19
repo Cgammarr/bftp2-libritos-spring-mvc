@@ -4,8 +4,9 @@
 <body>
 <header th:replace="fragments/header"></header>
 <section class="container">
-    <h2>Welcome to our library. </h2>
-    <p>Go to the <a href="/books/">Books</a> section or <a href="/books/new">create a new book</a></p>
+  <h1 th:text="${libro.title}"></h1>
+  <h2 th:text="${libro.author}"></h2>
+  <h3 th:text="${libro.category}"></h3>
 </section>
 <footer th:replace="fragments/footer"></footer>
 </body>
