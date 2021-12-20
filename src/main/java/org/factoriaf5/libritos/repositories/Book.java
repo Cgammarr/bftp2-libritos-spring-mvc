@@ -14,6 +14,7 @@ public class Book implements Serializable {
     private String title;
     private String author;
     private String category;
+    private String coverImage;
 
     public Book() {
 
@@ -41,16 +42,6 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
-
     public String getAuthor() {
         return author;
     }
@@ -67,16 +58,24 @@ public class Book implements Serializable {
         this.category = category;
     }
 
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(category, book.category);
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(category, book.category) && Objects.equals(coverImage, book.coverImage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, category);
+        return Objects.hash(id, title, author, category, coverImage);
     }
 }

@@ -81,7 +81,7 @@ class ApplicationTests {
     @Test
     void returnsAFormToEditBooks() throws Exception {
         Book book = bookRepository.save(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", "fantasy"));
-        mockMvc.perform(get("/books/edit/" + book.getId()))
+        mockMvc.perform(get("/books/" + book.getId() + "/edit"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("books/edit"))
                 .andExpect(model().attribute("book", book))

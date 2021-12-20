@@ -21,6 +21,11 @@
             <input th:field="*{category}" type="text" class="col-md6 form-control form-control-sm" id="category"
                    placeholder="Enter category">
         </div>
+        <div class="form-group">
+            <label class="col-md2" for="coverImage">CoverImage</label>
+            <input th:field="*{coverImage}" type="url" class="col-md6 form-control form-control-sm" id="coverImage"
+                   placeholder="Add an image url">
+        </div>
         <div class="card-footer ">
             <input type="submit" class="btn btn-primary btn-sm" value="Save"/>
         </div>
