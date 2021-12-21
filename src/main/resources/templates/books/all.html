@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/head"></head>
 <body>
 <header th:replace="fragments/header"></header>
@@ -14,7 +14,7 @@
                 <div th:text="${book.author}"></div>
                 <div th:text="${book.category}"></div>
             </div>
-            <div class="buttons">
+            <div class="buttons" sec:authorize="isAuthenticated()">
                 <a class="btn btn-success btn-sm" th:href="'/books/'+${book.id} + '/edit'">Edit</a>
                 <a class="btn btn-danger btn-sm" th:href="'/books/'+${book.id}+'/delete'">Delete</a>
             </div>
