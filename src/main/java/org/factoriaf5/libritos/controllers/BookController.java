@@ -49,7 +49,7 @@ public class BookController {
     }
 
     @PostMapping("/books/new")
-    String addBook(@ModelAttribute Book book) {
+    public String addBook(@ModelAttribute Book book) {
         bookRepository.save(book);
         return "redirect:/books";
     }
