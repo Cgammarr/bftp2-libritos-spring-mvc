@@ -45,12 +45,11 @@ class ApplicationTests {
     }
 
     @Test
-    @WithMockUser
     void returnsTheExistingBooks() throws Exception {
 
         Book book = bookRepository.save(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", "fantasy"));
 
-        mockMvc.perform(get("/books"))
+        mockMvc.perform(get("/books/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("books/all"))
                 .andExpect(model().attribute("books", hasItem(book)));
@@ -109,27 +108,27 @@ class ApplicationTests {
     }
 
     @Test
-    @WithAnonymousUser
     void anonymousUsersCannotCreateABook() throws Exception {
         mockMvc.perform(post("/books/new")
                         .param("title", "Harry Potter and the Philosopher's Stone")
                         .param("author", "J.K. Rowling")
                         .param("category", "fantasy")
                         .with(csrf()))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 
     @Test
-    @WithAnonymousUser
     void anonymousUsersCannotEditABook() throws Exception {
-        mockMvc.perform(get("/books/0/edit"))
-                .andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/books/1/edit"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 
     @Test
-    @WithAnonymousUser
     void anonymousUsersCannotDeleteABook() throws Exception {
-        mockMvc.perform(get("/books/0/edit"))
-                .andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/books/1/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 }
