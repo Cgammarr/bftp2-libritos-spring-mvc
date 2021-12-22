@@ -62,7 +62,12 @@ class ApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name("books/edit"))
                 .andExpect(model().attributeExists("book"))
-                .andExpect(model().attribute("title", "Create new book"));
+                .andExpect(model().attribute("title", "Create new book"))
+                .andExpect(model().attribute("categories", hasItems(
+                        hasProperty("name", is("Essay")),
+                        hasProperty("name", is("Fantasy")),
+                        hasProperty("name", is("Software"))
+                )));
     }
 
     @Test
@@ -93,7 +98,12 @@ class ApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name("books/edit"))
                 .andExpect(model().attribute("book", book))
-                .andExpect(model().attribute("title", "Edit book"));
+                .andExpect(model().attribute("title", "Edit book"))
+                .andExpect(model().attribute("categories", hasItems(
+                        hasProperty("name", is("Essay")),
+                        hasProperty("name", is("Fantasy")),
+                        hasProperty("name", is("Software"))
+                )));
     }
 
     @Test

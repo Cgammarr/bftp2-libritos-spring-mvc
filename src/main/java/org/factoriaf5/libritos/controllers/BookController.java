@@ -2,6 +2,7 @@ package org.factoriaf5.libritos.controllers;
 
 import org.factoriaf5.libritos.repositories.Book;
 import org.factoriaf5.libritos.repositories.BookRepository;
+import org.factoriaf5.libritos.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,13 @@ import java.util.List;
 public class BookController {
 
     private BookRepository bookRepository;
+    private CategoryRepository categoryRepository;
+
 
     @Autowired
-    public BookController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/books")
@@ -41,6 +45,7 @@ public class BookController {
     String getForm(Model model) {
         Book book = new Book();
         model.addAttribute("book", book);
+        model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("title", "Create new book");
         return "books/edit";
     }
@@ -55,6 +60,7 @@ public class BookController {
     String editBook(Model model, @PathVariable Long id) {
         Book book = bookRepository.findById(id).get();
         model.addAttribute("book", book);
+        model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("title", "Edit book");
         return "books/edit";
     }
