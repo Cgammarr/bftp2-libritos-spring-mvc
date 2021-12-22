@@ -52,7 +52,12 @@ class ApplicationTests {
         mockMvc.perform(get("/books/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("books/all"))
-                .andExpect(model().attribute("books", hasItem(book)));
+                .andExpect(model().attribute("books", hasItem(book)))
+                .andExpect(model().attribute("categories", hasItems(
+                        hasProperty("name", is("Essay")),
+                        hasProperty("name", is("Fantasy")),
+                        hasProperty("name", is("Software"))
+                )));
     }
 
     @Test
@@ -154,7 +159,26 @@ class ApplicationTests {
                 .andExpect(view().name("books/all"))
                 .andExpect(model().attribute("title", equalTo("Books containing \"Harry\"")))
                 .andExpect(model().attribute("books", hasItem(bookWithWord)))
-                .andExpect(model().attribute("books", not(hasItem(bookWithoutWord))));
+                .andExpect(model().attribute("books", not(hasItem(bookWithoutWord))))
+                .andExpect(model().attribute("categories", hasItems(
+                        hasProperty("name", is("Essay")),
+                        hasProperty("name", is("Fantasy")),
+                        hasProperty("name", is("Software"))
+                )));
+    }
+
+    @Test
+    @WithMockUser
+    void returnsBooksFromAGivenCategory() throws Exception {
+
+        Book fantasyBook = bookRepository.save(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", "fantasy"));
+        Book softwareBook = bookRepository.save(new Book("Lean Software Development", "Mary Poppendieck", "software"));
+
+        mockMvc.perform(get("/books?category=fantasy"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("books/all"))
+                .andExpect(model().attribute("books", hasItem(fantasyBook)))
+                .andExpect(model().attribute("books", not(hasItem(softwareBook))));
     }
 
 }

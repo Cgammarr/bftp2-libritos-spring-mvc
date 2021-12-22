@@ -38,3 +38,12 @@
 .book .buttons {
     margin-top: 10px;
 }
+
+.book-filters {
+    list-style: none;
+}
+
+.book-filters li {
+    display: inline-block;
+    margin: 0 20px;
+}

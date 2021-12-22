@@ -13,8 +13,8 @@ import java.util.List;
 @Controller
 public class BookController {
 
-    private BookRepository bookRepository;
-    private CategoryRepository categoryRepository;
+    private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
 
     @Autowired
@@ -24,10 +24,11 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    String listBooks(Model model) {
-        List<Book> books = (List<Book>) bookRepository.findAll();
+    String listBooks(Model model, @RequestParam(required = false) String category) {
+
         model.addAttribute("title", "Book list");
-        model.addAttribute("books", books);
+        model.addAttribute("books", getBooks(category));
+        model.addAttribute("categories", categoryRepository.findAll());
         return "books/all";
     }
 
@@ -76,7 +77,16 @@ public class BookController {
         List<Book> books = bookRepository.findBooksByTitleContaining(word);
         model.addAttribute("title", String.format("Books containing \"%s\"", word));
         model.addAttribute("books", books);
+        model.addAttribute("categories", categoryRepository.findAll());
+
         return "books/all";
+    }
+
+    private List<Book> getBooks(String category) {
+        if (category == null) {
+            return bookRepository.findAll();
+        }
+        return bookRepository.findBooksByCategoryEquals(category);
     }
 
 }

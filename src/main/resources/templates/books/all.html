@@ -5,6 +5,14 @@
 <header th:replace="fragments/header"></header>
 <section class="container">
     <h1 th:text="${title}"></h1>
+    <ul class="book-filters" sec:authorize="isAuthenticated()">
+        <li><a href="/books/">All</a></li>
+        <li th:each="category: ${categories}">
+            <a th:href="${'/books?category='+category.name}"
+               th:text="${category.name}">
+            </a>
+        </li>
+    </ul>
     <div class="book-list">
         <div class="book" th:each="book: ${books}">
             <div class="img-container">
