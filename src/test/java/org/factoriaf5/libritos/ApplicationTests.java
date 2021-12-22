@@ -131,4 +131,20 @@ class ApplicationTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/login"));
     }
+
+    @Test
+    @WithMockUser
+    void allowsToSearchBooksByTitle() throws Exception {
+
+        Book bookWithWord = bookRepository.save(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", "fantasy"));
+        Book bookWithoutWord = bookRepository.save(new Book("Lean Software Development", "Mary Poppendieck", "Software"));
+
+        mockMvc.perform(get("/books/search?word=Harry"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("books/all"))
+                .andExpect(model().attribute("title", equalTo("Books containing \"Harry\"")))
+                .andExpect(model().attribute("books", hasItem(bookWithWord)))
+                .andExpect(model().attribute("books", not(hasItem(bookWithoutWord))));
+    }
+
 }
